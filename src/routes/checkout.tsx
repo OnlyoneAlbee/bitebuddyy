@@ -2,17 +2,25 @@ import { createFileRoute, useNavigate, Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { toast } from "sonner";
 import { z } from "zod";
-import { Loader2, CreditCard } from "lucide-react";
+import { Loader2, CreditCard, MapPin } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { RequireAuth } from "@/components/auth/Guards";
 import { useCart } from "@/context/CartContext";
 import { useAuth } from "@/context/AuthContext";
 import { formatNaira } from "@/utils/format";
 import { payWithPaystack, isPaystackConfigured } from "@/lib/paystack";
 import { createOrder } from "@/services/orders";
+import { IBADAN_AREAS, CITY, STATE } from "@/lib/locations";
 
 export const Route = createFileRoute("/checkout")({
   head: () => ({ meta: [{ title: "Checkout — BiteBuddy" }] }),
