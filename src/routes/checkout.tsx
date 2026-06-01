@@ -53,6 +53,7 @@ function CheckoutPage() {
   const { user, profile } = useAuth();
   const navigate = useNavigate();
   const [submitting, setSubmitting] = useState(false);
+  const [area, setArea] = useState("");
 
   const grandTotal = totalAmount + (items.length ? DELIVERY_FEE : 0);
 
