@@ -93,7 +93,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
           "Order jollof rice, swallow, soups, grills, fast food and drinks from your favourite Nigerian restaurants. Fast, reliable delivery with BiteBuddy.",
       },
       { name: "author", content: "GROUP O CREATORS" },
-      { property: "og:title", content: "BiteBuddy — Nigerian Food Delivery" },
+      { property: "og:title", content: "BiteBuddy — Nigerian Food Delivery, Fast & Fresh" },
       {
         property: "og:description",
         content:
@@ -101,6 +101,12 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: "BiteBuddy — Nigerian Food Delivery, Fast & Fresh" },
+      { name: "description", content: "BiteBuddy Delight is a modern food delivery web application for discovering restaurants and ordering meals." },
+      { property: "og:description", content: "BiteBuddy Delight is a modern food delivery web application for discovering restaurants and ordering meals." },
+      { name: "twitter:description", content: "BiteBuddy Delight is a modern food delivery web application for discovering restaurants and ordering meals." },
+      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/74313e50-3101-4e21-bfb8-932ea586eaf8/id-preview-ba7aefec--794eee4d-5846-4c1b-b323-661632f5e6da.lovable.app-1780285615576.png" },
+      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/74313e50-3101-4e21-bfb8-932ea586eaf8/id-preview-ba7aefec--794eee4d-5846-4c1b-b323-661632f5e6da.lovable.app-1780285615576.png" },
     ],
     links: [
       { rel: "stylesheet", href: appCss },
