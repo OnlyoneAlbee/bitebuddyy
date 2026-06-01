@@ -34,7 +34,12 @@ export const Route = createFileRoute("/checkout")({
 const DELIVERY_FEE = 500;
 
 const schema = z.object({
-  address: z.string().trim().min(5, "Enter a valid delivery address").max(300),
+  area: z.string().trim().min(2, "Please select your delivery area").max(120),
+  details: z
+    .string()
+    .trim()
+    .min(5, "Enter your street, house number or landmark")
+    .max(300),
   phone: z
     .string()
     .trim()
