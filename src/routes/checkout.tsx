@@ -2,17 +2,25 @@ import { createFileRoute, useNavigate, Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { toast } from "sonner";
 import { z } from "zod";
-import { Loader2, CreditCard } from "lucide-react";
+import { Loader2, CreditCard, MapPin } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { RequireAuth } from "@/components/auth/Guards";
 import { useCart } from "@/context/CartContext";
 import { useAuth } from "@/context/AuthContext";
 import { formatNaira } from "@/utils/format";
 import { payWithPaystack, isPaystackConfigured } from "@/lib/paystack";
 import { createOrder } from "@/services/orders";
+import { IBADAN_AREAS, CITY, STATE } from "@/lib/locations";
 
 export const Route = createFileRoute("/checkout")({
   head: () => ({ meta: [{ title: "Checkout — BiteBuddy" }] }),
@@ -26,7 +34,12 @@ export const Route = createFileRoute("/checkout")({
 const DELIVERY_FEE = 500;
 
 const schema = z.object({
-  address: z.string().trim().min(5, "Enter a valid delivery address").max(300),
+  area: z.string().trim().min(2, "Please select your delivery area").max(120),
+  details: z
+    .string()
+    .trim()
+    .min(5, "Enter your street, house number or landmark")
+    .max(300),
   phone: z
     .string()
     .trim()
@@ -40,6 +53,7 @@ function CheckoutPage() {
   const { user, profile } = useAuth();
   const navigate = useNavigate();
   const [submitting, setSubmitting] = useState(false);
+  const [area, setArea] = useState("");
 
   const grandTotal = totalAmount + (items.length ? DELIVERY_FEE : 0);
 
@@ -59,10 +73,13 @@ function CheckoutPage() {
     if (!user) return;
     const form = new FormData(e.currentTarget);
     const parsed = schema.safeParse({
-      address: String(form.get("address")),
+      area,
+      details: String(form.get("details")),
       phone: String(form.get("phone")),
     });
     if (!parsed.success) return toast.error(parsed.error.issues[0].message);
+
+    const deliveryAddress = `${parsed.data.details}, ${parsed.data.area}, ${CITY}, ${STATE}`;
 
     setSubmitting(true);
     try {
@@ -76,7 +93,7 @@ function CheckoutPage() {
         customerId: user.id,
         items,
         totalAmount: grandTotal,
-        deliveryAddress: parsed.data.address,
+        deliveryAddress,
         phoneNumber: parsed.data.phone,
       });
 
@@ -98,13 +115,32 @@ function CheckoutPage() {
         <div className="space-y-4 lg:col-span-2">
           <div className="rounded-2xl border bg-card p-5 shadow-sm">
             <h2 className="text-lg font-bold">Delivery details</h2>
+            <p className="mt-1 flex items-center gap-1.5 text-sm text-muted-foreground">
+              <MapPin className="h-4 w-4 text-primary" /> We currently deliver
+              around {CITY}, {STATE} — including Lead City University campus.
+            </p>
             <div className="mt-4 space-y-4">
               <div className="space-y-1.5">
-                <Label htmlFor="address">Delivery address</Label>
+                <Label htmlFor="area">Delivery area</Label>
+                <Select value={area} onValueChange={setArea}>
+                  <SelectTrigger id="area">
+                    <SelectValue placeholder="Select your area in Ibadan" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {IBADAN_AREAS.map((a) => (
+                      <SelectItem key={a} value={a}>
+                        {a}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+              <div className="space-y-1.5">
+                <Label htmlFor="details">Street / house number / landmark</Label>
                 <Textarea
-                  id="address"
-                  name="address"
-                  placeholder="House number, street, area, city"
+                  id="details"
+                  name="details"
+                  placeholder="e.g. Hostel B, Lead City University, beside the main gate"
                   required
                 />
               </div>

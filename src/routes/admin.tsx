@@ -20,10 +20,10 @@ export const Route = createFileRoute("/admin")({
 
 const TABS = [
   { to: "/admin", label: "Overview", icon: LayoutDashboard, exact: true },
-  { to: "/admin/users", label: "Users", icon: Users },
-  { to: "/admin/restaurants", label: "Restaurants", icon: Store },
-  { to: "/admin/orders", label: "Orders", icon: ClipboardList },
-  { to: "/admin/settings", label: "Settings", icon: Settings },
+  { to: "/admin/users", label: "Users", icon: Users, exact: false },
+  { to: "/admin/restaurants", label: "Restaurants", icon: Store, exact: false },
+  { to: "/admin/orders", label: "Orders", icon: ClipboardList, exact: false },
+  { to: "/admin/settings", label: "Settings", icon: Settings, exact: false },
 ] as const;
 
 function AdminLayout() {
