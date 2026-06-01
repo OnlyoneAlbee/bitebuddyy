@@ -73,10 +73,13 @@ function CheckoutPage() {
     if (!user) return;
     const form = new FormData(e.currentTarget);
     const parsed = schema.safeParse({
-      address: String(form.get("address")),
+      area,
+      details: String(form.get("details")),
       phone: String(form.get("phone")),
     });
     if (!parsed.success) return toast.error(parsed.error.issues[0].message);
+
+    const deliveryAddress = `${parsed.data.details}, ${parsed.data.area}, ${CITY}, ${STATE}`;
 
     setSubmitting(true);
     try {
@@ -90,7 +93,7 @@ function CheckoutPage() {
         customerId: user.id,
         items,
         totalAmount: grandTotal,
-        deliveryAddress: parsed.data.address,
+        deliveryAddress,
         phoneNumber: parsed.data.phone,
       });
 
