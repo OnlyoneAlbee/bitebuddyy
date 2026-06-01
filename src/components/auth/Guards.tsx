@@ -14,14 +14,14 @@ function FullPageLoader() {
 export function RequireAuth({ children }: { children: ReactNode }) {
   const { user, loading } = useAuth();
   if (loading) return <FullPageLoader />;
-  if (!user) return <Navigate to="/login" search={{ redirect: undefined }} />;
+  if (!user) return <Navigate to="/login" />;
   return <>{children}</>;
 }
 
 export function RequireAdmin({ children }: { children: ReactNode }) {
   const { user, isAdmin, loading } = useAuth();
   if (loading) return <FullPageLoader />;
-  if (!user) return <Navigate to="/login" search={{ redirect: undefined }} />;
+  if (!user) return <Navigate to="/login" />;
   if (!isAdmin) return <Navigate to="/" />;
   return <>{children}</>;
 }
