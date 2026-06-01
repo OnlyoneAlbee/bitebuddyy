@@ -115,13 +115,32 @@ function CheckoutPage() {
         <div className="space-y-4 lg:col-span-2">
           <div className="rounded-2xl border bg-card p-5 shadow-sm">
             <h2 className="text-lg font-bold">Delivery details</h2>
+            <p className="mt-1 flex items-center gap-1.5 text-sm text-muted-foreground">
+              <MapPin className="h-4 w-4 text-primary" /> We currently deliver
+              around {CITY}, {STATE} — including Lead City University campus.
+            </p>
             <div className="mt-4 space-y-4">
               <div className="space-y-1.5">
-                <Label htmlFor="address">Delivery address</Label>
+                <Label htmlFor="area">Delivery area</Label>
+                <Select value={area} onValueChange={setArea}>
+                  <SelectTrigger id="area">
+                    <SelectValue placeholder="Select your area in Ibadan" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {IBADAN_AREAS.map((a) => (
+                      <SelectItem key={a} value={a}>
+                        {a}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+              <div className="space-y-1.5">
+                <Label htmlFor="details">Street / house number / landmark</Label>
                 <Textarea
-                  id="address"
-                  name="address"
-                  placeholder="House number, street, area, city"
+                  id="details"
+                  name="details"
+                  placeholder="e.g. Hostel B, Lead City University, beside the main gate"
                   required
                 />
               </div>
