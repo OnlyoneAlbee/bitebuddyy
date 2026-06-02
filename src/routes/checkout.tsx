@@ -1,4 +1,4 @@
-import { createFileRoute, useNavigate, Link } from "@tanstack/react-router";
+import { useNavigate, Link } from "react-router-dom";
 import { useState } from "react";
 import { toast } from "sonner";
 import { z } from "zod";
@@ -14,22 +14,13 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { RequireAuth } from "@/components/auth/Guards";
 import { useCart } from "@/context/CartContext";
 import { useAuth } from "@/context/AuthContext";
 import { formatNaira } from "@/utils/format";
 import { payWithPaystack, isPaystackConfigured } from "@/lib/paystack";
 import { createOrder } from "@/services/orders";
 import { IBADAN_AREAS, CITY, STATE } from "@/lib/locations";
-
-export const Route = createFileRoute("/checkout")({
-  head: () => ({ meta: [{ title: "Checkout — BiteBuddy" }] }),
-  component: () => (
-    <RequireAuth>
-      <CheckoutPage />
-    </RequireAuth>
-  ),
-});
+import { useDocumentTitle } from "@/hooks/useDocumentTitle";
 
 const DELIVERY_FEE = 500;
 
@@ -48,7 +39,8 @@ const schema = z.object({
     .regex(/^[0-9+\-\s]+$/, "Phone number is invalid"),
 });
 
-function CheckoutPage() {
+export default function CheckoutPage() {
+  useDocumentTitle("Checkout — BiteBuddy");
   const { items, totalAmount, clearCart } = useCart();
   const { user, profile } = useAuth();
   const navigate = useNavigate();
@@ -99,7 +91,7 @@ function CheckoutPage() {
 
       clearCart();
       toast.success("Payment successful! Your order is now pending.");
-      navigate({ to: "/profile" });
+      navigate("/profile");
     } catch (err) {
       toast.error(err instanceof Error ? err.message : "Checkout failed");
     } finally {

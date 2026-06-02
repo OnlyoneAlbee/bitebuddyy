@@ -1,23 +1,13 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { Link } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import { Search, Store, Loader2 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { Input } from "@/components/ui/input";
-import { RequireAuth } from "@/components/auth/Guards";
+import { useDocumentTitle } from "@/hooks/useDocumentTitle";
 
-export const Route = createFileRoute("/restaurants")({
-  head: () => ({
-    meta: [{ title: "Restaurants — BiteBuddy" }],
-  }),
-  component: () => (
-    <RequireAuth>
-      <RestaurantsPage />
-    </RequireAuth>
-  ),
-});
-
-function RestaurantsPage() {
+export default function RestaurantsPage() {
+  useDocumentTitle("Restaurants — BiteBuddy");
   const [q, setQ] = useState("");
   const { data, isLoading } = useQuery({
     queryKey: ["restaurants"],
@@ -68,8 +58,7 @@ function RestaurantsPage() {
           {filtered.map((r) => (
             <Link
               key={r.id}
-              to="/restaurant/$id"
-              params={{ id: r.id }}
+              to={`/restaurant/${r.id}`}
               className="group overflow-hidden rounded-2xl border bg-card shadow-sm transition hover:shadow-soft"
             >
               <div className="aspect-video overflow-hidden">

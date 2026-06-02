@@ -1,4 +1,4 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { Link } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import {
   ArrowRight,
@@ -12,23 +12,13 @@ import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/context/AuthContext";
 import { formatNaira } from "@/utils/format";
-import heroImg from "/images/hero.jpg";
+import { useDocumentTitle } from "@/hooks/useDocumentTitle";
 
-export const Route = createFileRoute("/")({
-  head: () => ({
-    meta: [
-      { title: "BiteBuddy — Food Delivery at Lead City University, Ibadan" },
-      {
-        name: "description",
-        content:
-          "Order authentic Nigerian meals delivered fast around Lead City University and across Ibadan, Oyo State, with BiteBuddy.",
-      },
-    ],
-  }),
-  component: LandingPage,
-});
-
-function LandingPage() {
+export default function LandingPage() {
+  useDocumentTitle(
+    "BiteBuddy — Food Delivery at Lead City University, Ibadan",
+    "Order authentic Nigerian meals delivered fast around Lead City University and across Ibadan, Oyo State, with BiteBuddy.",
+  );
   const { user } = useAuth();
 
   const { data: restaurants } = useQuery({
@@ -84,7 +74,7 @@ function LandingPage() {
           </div>
           <div className="relative animate-fade-up">
             <img
-              src={heroImg}
+              src="/images/hero.jpg"
               alt="A spread of colourful Nigerian dishes"
               width={1600}
               height={1024}
@@ -136,8 +126,7 @@ function LandingPage() {
               {restaurants.map((r) => (
                 <Link
                   key={r.id}
-                  to="/restaurant/$id"
-                  params={{ id: r.id }}
+                  to={`/restaurant/${r.id}`}
                   className="group overflow-hidden rounded-2xl border bg-card shadow-sm transition hover:shadow-soft"
                 >
                   <div className="aspect-video overflow-hidden">
