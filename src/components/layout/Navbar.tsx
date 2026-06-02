@@ -1,4 +1,4 @@
-import { Link, useNavigate, useRouterState } from "@tanstack/react-router";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useState } from "react";
 import {
   Menu,
@@ -39,7 +39,7 @@ export function Navbar() {
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
 
-  const pathname = useRouterState({ select: (s) => s.location.pathname });
+  const pathname = useLocation().pathname;
 
   const links: NavLink[] = [{ label: "Home", to: "/" }];
   if (user) {
@@ -53,7 +53,7 @@ export function Navbar() {
   const handleSignOut = async () => {
     await signOut();
     setOpen(false);
-    navigate({ to: "/" });
+    navigate("/");
   };
 
   return (
@@ -134,11 +134,11 @@ export function Navbar() {
                   )}
                 </DropdownMenuLabel>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem onClick={() => navigate({ to: "/profile" })}>
+                <DropdownMenuItem onClick={() => navigate("/profile")}>
                   <UserIcon className="mr-2 h-4 w-4" /> Profile
                 </DropdownMenuItem>
                 {isAdmin && (
-                  <DropdownMenuItem onClick={() => navigate({ to: "/admin" })}>
+                  <DropdownMenuItem onClick={() => navigate("/admin")}>
                     <LayoutDashboard className="mr-2 h-4 w-4" /> Admin Dashboard
                   </DropdownMenuItem>
                 )}

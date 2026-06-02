@@ -1,4 +1,4 @@
-import { createFileRoute, useNavigate, Link } from "@tanstack/react-router";
+import { useNavigate, Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import { z } from "zod";
@@ -8,30 +8,22 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
-
-export const Route = createFileRoute("/login")({
-  head: () => ({
-    meta: [
-      { title: "Login or Sign up — BiteBuddy" },
-      {
-        name: "description",
-        content: "Access your BiteBuddy account to order Nigerian food.",
-      },
-    ],
-  }),
-  component: LoginPage,
-});
+import { useDocumentTitle } from "@/hooks/useDocumentTitle";
 
 const emailSchema = z.string().trim().email("Enter a valid email").max(255);
 const passwordSchema = z.string().min(6, "Password must be at least 6 characters").max(72);
 
-function LoginPage() {
+export default function LoginPage() {
+  useDocumentTitle(
+    "Login or Sign up — BiteBuddy",
+    "Access your BiteBuddy account to order Nigerian food.",
+  );
   const { user, loading, signIn, signUp } = useAuth();
   const navigate = useNavigate();
   const [submitting, setSubmitting] = useState(false);
 
   useEffect(() => {
-    if (!loading && user) navigate({ to: "/restaurants" });
+    if (!loading && user) navigate("/restaurants");
   }, [user, loading, navigate]);
 
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -49,7 +41,7 @@ function LoginPage() {
     setSubmitting(false);
     if (error) return toast.error(error);
     toast.success("Welcome back!");
-    navigate({ to: "/restaurants" });
+    navigate("/restaurants");
   };
 
   const handleSignup = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -69,7 +61,7 @@ function LoginPage() {
     setSubmitting(false);
     if (error) return toast.error(error);
     toast.success("Account created! You can now start ordering.");
-    navigate({ to: "/restaurants" });
+    navigate("/restaurants");
   };
 
   return (
