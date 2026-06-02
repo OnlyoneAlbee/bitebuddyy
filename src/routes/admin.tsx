@@ -1,8 +1,6 @@
-import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState, useCallback } from "react";
 import { Store, Users, ClipboardList, ShieldCheck, Loader2 } from "lucide-react";
 import { toast } from "sonner";
-import { RequireAdmin } from "@/components/auth/Guards";
 import { useAuth } from "@/context/AuthContext";
 import { supabase } from "@/integrations/supabase/client";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -16,15 +14,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-
-export const Route = createFileRoute("/admin")({
-  head: () => ({ meta: [{ title: "Admin Dashboard — BiteBuddy" }] }),
-  component: () => (
-    <RequireAdmin>
-      <AdminDashboard />
-    </RequireAdmin>
-  ),
-});
+import { useDocumentTitle } from "@/hooks/useDocumentTitle";
 
 interface UserRow {
   id: string;
@@ -33,7 +23,8 @@ interface UserRow {
   isAdmin: boolean;
 }
 
-function AdminDashboard() {
+export default function AdminDashboard() {
+  useDocumentTitle("Admin Dashboard — BiteBuddy");
   const { user } = useAuth();
   const [loading, setLoading] = useState(true);
   const [stats, setStats] = useState({ restaurants: 0, users: 0, orders: 0 });

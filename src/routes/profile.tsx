@@ -1,22 +1,12 @@
-import { createFileRoute } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect } from "react";
 import { Loader2, Package } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
-import { RequireAuth } from "@/components/auth/Guards";
 import { useAuth } from "@/context/AuthContext";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { formatNaira, formatDate, initials } from "@/utils/format";
-
-export const Route = createFileRoute("/profile")({
-  head: () => ({ meta: [{ title: "My Profile — BiteBuddy" }] }),
-  component: () => (
-    <RequireAuth>
-      <ProfilePage />
-    </RequireAuth>
-  ),
-});
+import { useDocumentTitle } from "@/hooks/useDocumentTitle";
 
 const statusColor: Record<string, string> = {
   pending: "bg-warning/15 text-warning-foreground",
@@ -24,7 +14,8 @@ const statusColor: Record<string, string> = {
   delivered: "bg-success/15 text-success",
 };
 
-function ProfilePage() {
+export default function ProfilePage() {
+  useDocumentTitle("My Profile — BiteBuddy");
   const { user, profile, isAdmin } = useAuth();
 
   const { data: orders, isLoading, refetch } = useQuery({

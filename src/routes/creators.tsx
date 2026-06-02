@@ -1,18 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
-
-export const Route = createFileRoute("/creators")({
-  head: () => ({
-    meta: [
-      { title: "GROUP O CREATORS — BiteBuddy" },
-      {
-        name: "description",
-        content:
-          "Meet GROUP O CREATORS, the team behind the BiteBuddy / Chowly food delivery platform.",
-      },
-    ],
-  }),
-  component: CreatorsPage,
-});
+import { useDocumentTitle } from "@/hooks/useDocumentTitle";
 
 const CREATORS = [
   "Biney Enoch Onosetale",
@@ -27,7 +13,11 @@ const CREATORS = [
   "Alade Idris Oluwatobi",
 ];
 
-function CreatorsPage() {
+export default function CreatorsPage() {
+  useDocumentTitle(
+    "GROUP O CREATORS — BiteBuddy",
+    "Meet GROUP O CREATORS, the team behind the BiteBuddy / Chowly food delivery platform.",
+  );
   return (
     <div className="container-page py-14">
       <div className="mx-auto max-w-3xl text-center">
