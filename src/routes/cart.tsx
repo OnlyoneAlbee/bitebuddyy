@@ -1,22 +1,14 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { Link } from "react-router-dom";
 import { Minus, Plus, Trash2, ShoppingBag } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { RequireAuth } from "@/components/auth/Guards";
 import { useCart } from "@/context/CartContext";
 import { formatNaira } from "@/utils/format";
-
-export const Route = createFileRoute("/cart")({
-  head: () => ({ meta: [{ title: "Your Cart — BiteBuddy" }] }),
-  component: () => (
-    <RequireAuth>
-      <CartPage />
-    </RequireAuth>
-  ),
-});
+import { useDocumentTitle } from "@/hooks/useDocumentTitle";
 
 const DELIVERY_FEE = 500;
 
-function CartPage() {
+export default function CartPage() {
+  useDocumentTitle("Your Cart — BiteBuddy");
   const { items, updateQuantity, removeItem, totalAmount } = useCart();
 
   if (items.length === 0) {

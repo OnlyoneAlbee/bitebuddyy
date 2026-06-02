@@ -1,23 +1,14 @@
-import { createFileRoute, Link, useParams } from "@tanstack/react-router";
+import { Link, useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { ArrowLeft, Plus, Loader2 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
-import { RequireAuth } from "@/components/auth/Guards";
 import { useCart } from "@/context/CartContext";
 import { formatNaira } from "@/utils/format";
 
-export const Route = createFileRoute("/restaurant/$id")({
-  component: () => (
-    <RequireAuth>
-      <RestaurantPage />
-    </RequireAuth>
-  ),
-});
-
-function RestaurantPage() {
-  const { id } = useParams({ from: "/restaurant/$id" });
+export default function RestaurantPage() {
+  const { id = "" } = useParams();
   const { addItem } = useCart();
 
   const { data, isLoading } = useQuery({
