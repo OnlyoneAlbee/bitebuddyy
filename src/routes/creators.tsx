@@ -1,7 +1,6 @@
 import { useDocumentTitle } from "@/hooks/useDocumentTitle";
 
 const CREATORS = [
-  "Biney Enoch Onosetale",
   "Ogundare Samuel jesugbotemi",
   "Okoro Arinze David",
   "Job-Lesor David",
