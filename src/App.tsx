@@ -1,6 +1,7 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Routes, Route, useLocation } from "react-router-dom";
 import { useEffect, type ReactNode } from "react";
+import { Analytics } from "@vercel/analytics/react";
 
 import { ThemeProvider } from "@/context/ThemeContext";
 import { AuthProvider } from "@/context/AuthContext";
@@ -105,6 +106,7 @@ export default function App() {
               </Routes>
             </Shell>
             <Toaster richColors position="top-center" />
+            <Analytics />
           </CartProvider>
         </AuthProvider>
       </ThemeProvider>
