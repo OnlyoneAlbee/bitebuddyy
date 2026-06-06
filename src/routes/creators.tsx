@@ -27,7 +27,7 @@ export default function CreatorsPage() {
           GROUP O CREATORS
         </h1>
         <p className="mx-auto mt-5 max-w-2xl text-lg text-muted-foreground">
-          Chowly is a modern food delivery platform designed to help users
+          bitebuddy is a modern food delivery platform designed to help users
           discover restaurants, browse menus, place food orders, and enjoy a
           seamless delivery experience. The platform connects customers with
           restaurants through a simple, reliable, and user-friendly ordering
