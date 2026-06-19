@@ -3,7 +3,6 @@ import { useDocumentTitle } from "@/hooks/useDocumentTitle";
 const CREATORS = [
   "Ogundare Samuel jesugbotemi",
   "Okoro Arinze David",
-  "Job-Lesor David",
   "Akintunde Quadri Opeyemi",
   "Frank Albert",
   "Daud Balogun Oluwapelumi",
